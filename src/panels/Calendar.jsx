@@ -50,7 +50,7 @@ class Calendar extends Component {
       ? minPanel === 'year' ? 'year' : 'month'
       : minPanel === 'month' ? 'month' : 'day';
     let _selected = this.props.moment;
-    let shouldChange = panel === minPanel;
+    let shouldChange = panel === nextPanel;
 
     if (_selected && !shouldChange) {
       if (range) {
