@@ -2,7 +2,7 @@
  * rc-datetime-picker v1.6.1
  * https://github.com/AllenWooooo/rc-datetime-picker
  *
- * (c) 2018 Allen Wu
+ * (c) 2019 Allen Wu
  * License: MIT
  */
 (function (global, factory) {
@@ -78,7 +78,20 @@ var createClass = function () {
 
 
 
+var defineProperty = function (obj, key, value) {
+  if (key in obj) {
+    Object.defineProperty(obj, key, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true
+    });
+  } else {
+    obj[key] = value;
+  }
 
+  return obj;
+};
 
 var _extends = Object.assign || function (target) {
   for (var i = 1; i < arguments.length; i++) {
@@ -1054,13 +1067,13 @@ var Picker = function (_Component) {
     };
 
     _this.state = {
-      panel: 'calendar'
+      panel: "calendar"
     };
     return _this;
   }
 
   createClass(Picker, [{
-    key: 'render',
+    key: "render",
     value: function render() {
       var _props = this.props,
           _props$isOpen = _props.isOpen,
@@ -1073,37 +1086,54 @@ var Picker = function (_Component) {
           showCalendarPicker = _props$showCalendarPi === undefined ? true : _props$showCalendarPi;
       var panel = this.state.panel;
 
-      var isTimePanel = panel === 'time';
-      var isCalendarPanel = panel === 'calendar';
-      var className = classNames('datetime-picker', this.props.className, {
+      var isTimePanel = panel === "time";
+      var isCalendarPanel = panel === "calendar";
+      var className = classNames("datetime-picker", this.props.className, {
         split: splitPanel
       });
-      var props = blacklist(this.props, 'className', 'splitPanel', 'isOpen');
+      var props = blacklist(this.props, "className", "splitPanel", "isOpen");
 
       return React__default.createElement(
-        'div',
-        { className: className, style: { display: isOpen ? 'block' : 'none' }, onClick: function onClick(evt) {
+        "div",
+        {
+          className: className,
+          style: { display: isOpen ? "block" : "none" },
+          onClick: function onClick(evt) {
             return evt.stopPropagation();
-          } },
+          }
+        },
         shortcuts ? React__default.createElement(Shortcuts, props) : undefined,
+        showCalendarPicker ? React__default.createElement(Calendar, _extends({}, props, {
+          isOpen: isOpen,
+          style: {
+            display: isCalendarPanel || !splitPanel ? "block" : "none"
+          }
+        })) : undefined,
+        showTimePicker ? React__default.createElement(Time, _extends({}, props, {
+          style: { display: isTimePanel || !splitPanel ? "block" : "none" }
+        })) : undefined,
         splitPanel ? React__default.createElement(
-          'div',
-          { className: 'panel-nav' },
-          React__default.createElement(
-            'button',
-            { type: 'button', onClick: this.changePanel.bind(this, 'calendar'), className: isCalendarPanel ? 'active' : '' },
-            React__default.createElement('i', { className: 'fa fa-calendar-o' }),
-            'Date'
+          "div",
+          { className: "panel-nav" },
+          showCalendarPicker ? null : React__default.createElement(
+            "button",
+            {
+              type: "button",
+              onClick: this.changePanel.bind(this, "calendar"),
+              className: isCalendarPanel ? "active" : ""
+            },
+            "Date"
           ),
-          React__default.createElement(
-            'button',
-            { type: 'button', onClick: this.changePanel.bind(this, 'time'), className: isTimePanel ? 'active' : '' },
-            React__default.createElement('i', { className: 'fa fa-clock-o' }),
-            'Time'
+          showTimePicker ? null : React__default.createElement(
+            "button",
+            {
+              type: "button",
+              onClick: this.changePanel.bind(this, "time"),
+              className: isTimePanel ? "active" : ""
+            },
+            "Time"
           )
-        ) : undefined,
-        showCalendarPicker ? React__default.createElement(Calendar, _extends({}, props, { isOpen: isOpen, style: { display: isCalendarPanel || !splitPanel ? 'block' : 'none' } })) : undefined,
-        showTimePicker ? React__default.createElement(Time, _extends({}, props, { style: { display: isTimePanel || !splitPanel ? 'block' : 'none' } })) : undefined
+        ) : undefined
       );
     }
   }]);
@@ -1706,7 +1736,7 @@ var Trigger = function (_Component) {
           onChange = _this$props.onChange;
 
 
-      if (currentPanel === 'day' && closeOnSelectDay) {
+      if (currentPanel === "day" && closeOnSelectDay) {
         _this.setState({
           isOpen: false
         });
@@ -1743,11 +1773,12 @@ var Trigger = function (_Component) {
           isOpen = _this$state.isOpen;
 
       var style = {
-        display: isOpen ? 'block' : 'none',
-        position: 'fixed',
-        top: pos.top + 'px',
-        left: pos.left + 'px'
+        display: isOpen ? "block" : "none",
+        position: "fixed",
+        top: pos.top + "px",
+        left: pos.left + "px"
       };
+      style["z-index"] = 1;
 
       return React__default.createElement(
         Portal,
@@ -1757,12 +1788,13 @@ var Trigger = function (_Component) {
     };
 
     _this._renderPicker = function (isOpen) {
-      var props = blacklist(_this.props, 'className', 'appendToBody', 'children', 'onChange');
+      var props = blacklist(_this.props, "className", "appendToBody", "children", "onChange");
 
       return React__default.createElement(Picker, _extends({}, props, {
-        className: 'datetime-picker-popup',
+        className: "datetime-picker-popup",
         isOpen: isOpen,
-        onChange: _this.handleChange }));
+        onChange: _this.handleChange
+      }));
     };
 
     _this.state = {
@@ -1773,27 +1805,27 @@ var Trigger = function (_Component) {
   }
 
   createClass(Trigger, [{
-    key: 'componentDidMount',
+    key: "componentDidMount",
     value: function componentDidMount() {
-      window.addEventListener('click', this.handleDocumentClick, false);
+      window.addEventListener("click", this.handleDocumentClick, false);
 
       if (this.props.appendToBody) {
-        window.addEventListener('scroll', this.handlePortalPosition, false);
-        window.addEventListener('resize', this.handlePortalPosition, false);
+        window.addEventListener("scroll", this.handlePortalPosition, false);
+        window.addEventListener("resize", this.handlePortalPosition, false);
       }
     }
   }, {
-    key: 'componentWillUnmount',
+    key: "componentWillUnmount",
     value: function componentWillUnmount() {
-      window.removeEventListener('click', this.handleDocumentClick, false);
+      window.removeEventListener("click", this.handleDocumentClick, false);
 
       if (this.props.appendToBody) {
-        window.removeEventListener('scroll', this.handlePortalPosition, false);
-        window.removeEventListener('resize', this.handlePortalPosition, false);
+        window.removeEventListener("scroll", this.handlePortalPosition, false);
+        window.removeEventListener("resize", this.handlePortalPosition, false);
       }
     }
   }, {
-    key: 'render',
+    key: "render",
     value: function render() {
       var _props = this.props,
           children = _props.children,
@@ -1803,11 +1835,11 @@ var Trigger = function (_Component) {
 
 
       return React__default.createElement(
-        'div',
-        { className: 'datetime-trigger ' + className },
+        "div",
+        { className: "datetime-trigger " + className },
         React__default.createElement(
-          'div',
-          { onClick: this.togglePicker.bind(this, !isOpen), ref: 'trigger' },
+          "div",
+          { onClick: this.togglePicker.bind(this, !isOpen), ref: "trigger" },
           children
         ),
         appendToBody ? this._renderPortal() : this._renderPicker(isOpen)
@@ -1876,12 +1908,12 @@ var RangeTrigger = function (_Component) {
           pos = _this$state.pos,
           isOpen = _this$state.isOpen;
 
-      var style = {
+      var style = defineProperty({
         display: isOpen ? 'block' : 'none',
         position: 'fixed',
         top: pos.top + 'px',
         left: pos.left + 'px'
-      };
+      }, 'z-index', 1);
 
       return React__default.createElement(
         Portal,

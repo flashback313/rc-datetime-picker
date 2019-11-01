@@ -32,6 +32,7 @@
     "blacklist": "^1.1.4",
     "classnames": "^2.2.5",
     "create-react-class": "^15.6.2",
+    "rc-time-picker": "^2.0.0",
     "react-slider": "^0.9.0"
   },
   "devDependencies": {

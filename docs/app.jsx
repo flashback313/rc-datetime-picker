@@ -2,7 +2,8 @@ import React, {Component} from 'react';
 import {render} from 'react-dom';
 import moment from 'moment';
 
-import {DatetimePicker, DatetimePickerTrigger} from '../dist/rc-datetime-picker';
+import { DatetimePickerTrigger} from '../dist/rc-datetime-picker';
+import { DatetimePicker } from '../src/index';
 import './app.less';
 
 
@@ -29,6 +30,7 @@ class InlinePicker extends Component {
         <DatetimePicker
           moment={moment}
           onChange={this.handleChange}
+          splitPanel
         />
       </div>
     );

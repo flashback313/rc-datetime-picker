@@ -1,10 +1,9 @@
-import React, {Component} from 'react';
-import {findDOMNode} from 'react-dom';
+import React, { Component } from 'react';
+import { findDOMNode } from 'react-dom';
 import blacklist from 'blacklist';
 
 import DatetimePicker from './Picker.jsx';
 import Portal from './Portal.jsx';
-
 
 class Trigger extends Component {
   constructor() {
@@ -33,11 +32,11 @@ class Trigger extends Component {
     }
   }
 
-  handleDocumentClick = (evt) => {
+  handleDocumentClick = evt => {
     if (!findDOMNode(this).contains(evt.target)) {
       this.togglePicker(false);
     }
-  }
+  };
 
   handlePortalPosition = () => {
     if (this.state.isOpen) {
@@ -45,10 +44,10 @@ class Trigger extends Component {
         pos: this.getPosition()
       });
     }
-  }
+  };
 
   handleChange = (moment, currentPanel) => {
-    const {closeOnSelectDay, onChange} = this.props;
+    const { closeOnSelectDay, onChange } = this.props;
 
     if (currentPanel === 'day' && closeOnSelectDay) {
       this.setState({
@@ -57,18 +56,18 @@ class Trigger extends Component {
     }
 
     onChange && onChange(moment);
-  }
+  };
 
-  togglePicker = (isOpen) => {
-    const {disabled} = this.props;
-    
+  togglePicker = isOpen => {
+    const { disabled } = this.props;
+
     if (disabled) return;
 
     this.setState({
       isOpen,
       pos: this.getPosition()
     });
-  }
+  };
 
   getPosition = () => {
     const elem = this.refs.trigger;
@@ -78,48 +77,53 @@ class Trigger extends Component {
       top: Math.round(elemBCR.top + elemBCR.height),
       left: Math.round(elemBCR.left)
     };
-  }
+  };
 
   _renderPortal = () => {
-    const {pos, isOpen} = this.state;
-    const style = {
+    const { pos, isOpen } = this.state;
+    let style = {
       display: isOpen ? 'block' : 'none',
       position: 'fixed',
       top: `${pos.top}px`,
       left: `${pos.left}px`
     };
+    style['z-index'] = 1;
 
-    return (
-      <Portal style={style}>
-        {this._renderPicker(true)}
-      </Portal>
+    return <Portal style={style}>{this._renderPicker(true)}</Portal>;
+  };
+
+  _renderPicker = isOpen => {
+    const props = blacklist(
+      this.props,
+      'className',
+      'appendToBody',
+      'children',
+      'onChange'
     );
-  }
 
-  _renderPicker = (isOpen) => {
-    const props = blacklist(this.props, 'className', 'appendToBody', 'children', 'onChange');  
-    
     return (
-      <DatetimePicker 
+      <DatetimePicker
         {...props}
-        className="datetime-picker-popup" 
-        isOpen={isOpen} 
-        onChange={this.handleChange} />
+        className="datetime-picker-popup"
+        isOpen={isOpen}
+        onChange={this.handleChange}
+      />
     );
-  }
+  };
 
   render() {
-    const {children, appendToBody, className} = this.props;
-    const {isOpen} = this.state;
+    const { children, appendToBody, className } = this.props;
+    const { isOpen } = this.state;
 
     return (
       <div className={`datetime-trigger ${className}`}>
-        <div onClick={this.togglePicker.bind(this, !isOpen)} ref="trigger">{children}</div>
+        <div onClick={this.togglePicker.bind(this, !isOpen)} ref="trigger">
+          {children}
+        </div>
         {appendToBody ? this._renderPortal() : this._renderPicker(isOpen)}
       </div>
     );
   }
 }
-
 
 export default Trigger;

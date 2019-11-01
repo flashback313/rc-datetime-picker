@@ -92,6 +92,7 @@ class App extends Component {
     return (
       &lt;DatetimePickerTrigger
         shortcuts={shortcuts} 
+        splitPanel
         moment={this.state.moment}
         onChange={this.handleChange}&gt
         &lt;input type="text" value={this.state.moment.format('YYYY-MM-DD HH:mm')} readOnly /&gt;
