@@ -26,7 +26,9 @@ class Picker extends Component {
       shortcuts,
       splitPanel,
       showTimePicker = true,
-      showCalendarPicker = true
+      showCalendarPicker = true,
+      timeText = 'Time',
+      dateText = 'Date'
     } = this.props;
     const { panel } = this.state;
     const isTimePanel = panel === 'time';
@@ -73,7 +75,7 @@ class Picker extends Component {
                 onClick={this.changePanel.bind(this, 'time')}
                 className={isTimePanel ? 'active' : ''}
               >
-                Time
+                {timeText}
               </button>
             ) : (
               <button
@@ -81,7 +83,7 @@ class Picker extends Component {
                 onClick={this.changePanel.bind(this, 'calendar')}
                 className={isCalendarPanel ? 'active' : ''}
               >
-                Date
+                {dateText}
               </button>
             )}
           </div>
