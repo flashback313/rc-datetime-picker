@@ -6,16 +6,16 @@
  * License: MIT
  */
 (function (global, factory) {
-	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('react'), require('classnames/bind'), require('blacklist'), require('moment'), require('react-slider'), require('react-dom')) :
-	typeof define === 'function' && define.amd ? define(['exports', 'react', 'classnames/bind', 'blacklist', 'moment', 'react-slider', 'react-dom'], factory) :
-	(factory((global['rc-datetime-picker'] = {}),global.React,global.classNames,global.blacklist,global.moment,global.ReactSlider,global.ReactDOM));
-}(this, (function (exports,React,classNames,blacklist,moment,ReactSlider,ReactDOM) { 'use strict';
+	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('react'), require('classnames/bind'), require('blacklist'), require('moment'), require('rc-time-picker/lib/Panel'), require('react-dom')) :
+	typeof define === 'function' && define.amd ? define(['exports', 'react', 'classnames/bind', 'blacklist', 'moment', 'rc-time-picker/lib/Panel', 'react-dom'], factory) :
+	(factory((global['rc-datetime-picker'] = {}),global.React,global.classNames,global.blacklist,global.moment,global.TimePickerPanel,global.ReactDOM));
+}(this, (function (exports,React,classNames,blacklist,moment,TimePickerPanel,ReactDOM) { 'use strict';
 
 var React__default = 'default' in React ? React['default'] : React;
 classNames = classNames && classNames.hasOwnProperty('default') ? classNames['default'] : classNames;
 blacklist = blacklist && blacklist.hasOwnProperty('default') ? blacklist['default'] : blacklist;
 moment = moment && moment.hasOwnProperty('default') ? moment['default'] : moment;
-ReactSlider = ReactSlider && ReactSlider.hasOwnProperty('default') ? ReactSlider['default'] : ReactSlider;
+TimePickerPanel = TimePickerPanel && TimePickerPanel.hasOwnProperty('default') ? TimePickerPanel['default'] : TimePickerPanel;
 var ReactDOM__default = 'default' in ReactDOM ? ReactDOM['default'] : ReactDOM;
 
 var WEEKS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
@@ -841,6 +841,7 @@ var _initialiseProps = function _initialiseProps() {
   };
 };
 
+// import TimePicker from 'rc-time-picker';
 var Time = function (_Component) {
   inherits(Time, _Component);
 
@@ -867,10 +868,12 @@ var Time = function (_Component) {
   }, {
     key: 'render',
     value: function render() {
-      var _moment = this.state.moment;
-      var style = this.props.style;
+      var _props = this.props,
+          style = _props.style,
+          moment$$1 = _props.moment,
+          rangeAt = _props.rangeAt;
 
-
+      var val = moment$$1[rangeAt];
       return React__default.createElement(
         'div',
         { style: style },
@@ -879,38 +882,18 @@ var Time = function (_Component) {
           { className: 'time' },
           React__default.createElement(
             'div',
-            { className: 'show-time' },
+            { className: 'rc-calendar-time-picker' },
             React__default.createElement(
-              'span',
-              { className: 'text' },
-              _moment.format('HH')
-            ),
-            React__default.createElement(
-              'span',
-              { className: 'separater' },
-              ':'
-            ),
-            React__default.createElement(
-              'span',
-              { className: 'text' },
-              _moment.format('mm')
+              'div',
+              { className: 'rc-calendar-time-picker-panel' },
+              React__default.createElement(TimePickerPanel, {
+                value: val,
+                format: 'HH:mm',
+                showHour: true,
+                showMinute: true,
+                onChange: this.handleChange
+              })
             )
-          ),
-          React__default.createElement(
-            'div',
-            { className: 'sliders' },
-            React__default.createElement(
-              'span',
-              { className: 'slider-text' },
-              'Hours:'
-            ),
-            React__default.createElement(ReactSlider, { min: 0, max: 23, value: _moment.hour(), onChange: this.handleChange.bind(this, 'hours'), withBars: true }),
-            React__default.createElement(
-              'span',
-              { className: 'slider-text' },
-              'Minutes:'
-            ),
-            React__default.createElement(ReactSlider, { min: 0, max: 59, value: _moment.minute(), onChange: this.handleChange.bind(this, 'minutes'), withBars: true })
           )
         )
       );
@@ -939,29 +922,13 @@ var _initialiseProps$1 = function _initialiseProps() {
     return result;
   };
 
-  this.handleChange = function (type, value) {
-    var _props = _this2.props,
-        onChange = _props.onChange,
-        range = _props.range,
-        rangeAt = _props.rangeAt;
+  this.handleChange = function (value) {
+    var _props2 = _this2.props,
+        onChange = _props2.onChange,
+        rangeAt = _props2.rangeAt,
+        moment$$1 = _props2.moment;
 
-    var _moment = _this2.state.moment.clone();
-    var selected = _this2.props.moment;
-
-    _moment[type](value);
-
-    if (range) {
-      var copyed = selected ? Object.assign(selected, {}) : {};
-
-      copyed[rangeAt] = _moment;
-    } else {
-      selected = _moment;
-    }
-
-    _this2.setState({
-      moment: _moment
-    });
-    onChange && onChange(selected);
+    onChange && onChange(Object.assign({}, moment$$1, defineProperty({}, rangeAt, value)));
   };
 };
 
@@ -1067,13 +1034,13 @@ var Picker = function (_Component) {
     };
 
     _this.state = {
-      panel: "calendar"
+      panel: 'calendar'
     };
     return _this;
   }
 
   createClass(Picker, [{
-    key: "render",
+    key: 'render',
     value: function render() {
       var _props = this.props,
           _props$isOpen = _props.isOpen,
@@ -1083,21 +1050,25 @@ var Picker = function (_Component) {
           _props$showTimePicker = _props.showTimePicker,
           showTimePicker = _props$showTimePicker === undefined ? true : _props$showTimePicker,
           _props$showCalendarPi = _props.showCalendarPicker,
-          showCalendarPicker = _props$showCalendarPi === undefined ? true : _props$showCalendarPi;
+          showCalendarPicker = _props$showCalendarPi === undefined ? true : _props$showCalendarPi,
+          _props$timeText = _props.timeText,
+          timeText = _props$timeText === undefined ? 'Time' : _props$timeText,
+          _props$dateText = _props.dateText,
+          dateText = _props$dateText === undefined ? 'Date' : _props$dateText;
       var panel = this.state.panel;
 
-      var isTimePanel = panel === "time";
-      var isCalendarPanel = panel === "calendar";
-      var className = classNames("datetime-picker", this.props.className, {
+      var isTimePanel = panel === 'time';
+      var isCalendarPanel = panel === 'calendar';
+      var className = classNames('datetime-picker', this.props.className, {
         split: splitPanel
       });
-      var props = blacklist(this.props, "className", "splitPanel", "isOpen");
+      var props = blacklist(this.props, 'className', 'splitPanel', 'isOpen');
 
       return React__default.createElement(
-        "div",
+        'div',
         {
           className: className,
-          style: { display: isOpen ? "block" : "none" },
+          style: { display: isOpen ? 'block' : 'none' },
           onClick: function onClick(evt) {
             return evt.stopPropagation();
           }
@@ -1106,32 +1077,31 @@ var Picker = function (_Component) {
         showCalendarPicker ? React__default.createElement(Calendar, _extends({}, props, {
           isOpen: isOpen,
           style: {
-            display: isCalendarPanel || !splitPanel ? "block" : "none"
+            display: isCalendarPanel || !splitPanel ? 'block' : 'none'
           }
         })) : undefined,
         showTimePicker ? React__default.createElement(Time, _extends({}, props, {
-          style: { display: isTimePanel || !splitPanel ? "block" : "none" }
+          style: { display: isTimePanel || !splitPanel ? 'block' : 'none' }
         })) : undefined,
         splitPanel ? React__default.createElement(
-          "div",
-          { className: "panel-nav" },
-          showCalendarPicker ? null : React__default.createElement(
-            "button",
+          'div',
+          { className: 'panel-nav' },
+          panel === 'calendar' ? React__default.createElement(
+            'button',
             {
-              type: "button",
-              onClick: this.changePanel.bind(this, "calendar"),
-              className: isCalendarPanel ? "active" : ""
+              type: 'button',
+              onClick: this.changePanel.bind(this, 'time'),
+              className: isTimePanel ? 'active' : ''
             },
-            "Date"
-          ),
-          showTimePicker ? null : React__default.createElement(
-            "button",
+            timeText
+          ) : React__default.createElement(
+            'button',
             {
-              type: "button",
-              onClick: this.changePanel.bind(this, "time"),
-              className: isTimePanel ? "active" : ""
+              type: 'button',
+              onClick: this.changePanel.bind(this, 'calendar'),
+              className: isCalendarPanel ? 'active' : ''
             },
-            "Time"
+            dateText
           )
         ) : undefined
       );
@@ -1216,7 +1186,12 @@ var Range = function (_Component) {
         React__default.createElement(
           'div',
           { className: 'tools-bar' },
-          shortcuts ? React__default.createElement(Shortcuts, _extends({}, props, { moment: moment$$1 || {}, range: true, shortcuts: shortcuts, onChange: this.handleShortcutChange })) : undefined,
+          shortcuts ? React__default.createElement(Shortcuts, _extends({}, props, {
+            moment: moment$$1 || {},
+            range: true,
+            shortcuts: shortcuts,
+            onChange: this.handleShortcutChange
+          })) : undefined,
           React__default.createElement(
             'div',
             { className: 'buttons' },
@@ -1277,7 +1252,7 @@ var Range = function (_Component) {
                   React__default.createElement(Picker, _extends({}, props, {
                     isOpen: isOpen,
                     className: 'range-start-picker',
-                    showTimePicker: showTimePicker,
+                    splitPanel: showTimePicker,
                     moment: moment$$1,
                     range: true,
                     rangeAt: 'start',
@@ -1290,7 +1265,7 @@ var Range = function (_Component) {
                   React__default.createElement(Picker, _extends({}, props, {
                     isOpen: isOpen,
                     className: 'range-end-picker',
-                    showTimePicker: showTimePicker,
+                    splitPanel: showTimePicker,
                     moment: moment$$1,
                     range: true,
                     rangeAt: 'end',
@@ -1736,7 +1711,7 @@ var Trigger = function (_Component) {
           onChange = _this$props.onChange;
 
 
-      if (currentPanel === "day" && closeOnSelectDay) {
+      if (currentPanel === 'day' && closeOnSelectDay) {
         _this.setState({
           isOpen: false
         });
@@ -1773,12 +1748,12 @@ var Trigger = function (_Component) {
           isOpen = _this$state.isOpen;
 
       var style = {
-        display: isOpen ? "block" : "none",
-        position: "fixed",
-        top: pos.top + "px",
-        left: pos.left + "px"
+        display: isOpen ? 'block' : 'none',
+        position: 'fixed',
+        top: pos.top + 'px',
+        left: pos.left + 'px'
       };
-      style["z-index"] = 1;
+      style['z-index'] = 1;
 
       return React__default.createElement(
         Portal,
@@ -1788,10 +1763,10 @@ var Trigger = function (_Component) {
     };
 
     _this._renderPicker = function (isOpen) {
-      var props = blacklist(_this.props, "className", "appendToBody", "children", "onChange");
+      var props = blacklist(_this.props, 'className', 'appendToBody', 'children', 'onChange');
 
       return React__default.createElement(Picker, _extends({}, props, {
-        className: "datetime-picker-popup",
+        className: 'datetime-picker-popup',
         isOpen: isOpen,
         onChange: _this.handleChange
       }));
@@ -1805,27 +1780,27 @@ var Trigger = function (_Component) {
   }
 
   createClass(Trigger, [{
-    key: "componentDidMount",
+    key: 'componentDidMount',
     value: function componentDidMount() {
-      window.addEventListener("click", this.handleDocumentClick, false);
+      window.addEventListener('click', this.handleDocumentClick, false);
 
       if (this.props.appendToBody) {
-        window.addEventListener("scroll", this.handlePortalPosition, false);
-        window.addEventListener("resize", this.handlePortalPosition, false);
+        window.addEventListener('scroll', this.handlePortalPosition, false);
+        window.addEventListener('resize', this.handlePortalPosition, false);
       }
     }
   }, {
-    key: "componentWillUnmount",
+    key: 'componentWillUnmount',
     value: function componentWillUnmount() {
-      window.removeEventListener("click", this.handleDocumentClick, false);
+      window.removeEventListener('click', this.handleDocumentClick, false);
 
       if (this.props.appendToBody) {
-        window.removeEventListener("scroll", this.handlePortalPosition, false);
-        window.removeEventListener("resize", this.handlePortalPosition, false);
+        window.removeEventListener('scroll', this.handlePortalPosition, false);
+        window.removeEventListener('resize', this.handlePortalPosition, false);
       }
     }
   }, {
-    key: "render",
+    key: 'render',
     value: function render() {
       var _props = this.props,
           children = _props.children,
@@ -1835,11 +1810,11 @@ var Trigger = function (_Component) {
 
 
       return React__default.createElement(
-        "div",
-        { className: "datetime-trigger " + className },
+        'div',
+        { className: 'datetime-trigger ' + className },
         React__default.createElement(
-          "div",
-          { onClick: this.togglePicker.bind(this, !isOpen), ref: "trigger" },
+          'div',
+          { onClick: this.togglePicker.bind(this, !isOpen), ref: 'trigger' },
           children
         ),
         appendToBody ? this._renderPortal() : this._renderPicker(isOpen)
@@ -1928,7 +1903,8 @@ var RangeTrigger = function (_Component) {
       return React__default.createElement(Range, _extends({}, props, {
         className: 'datetime-range-picker-popup',
         isOpen: isOpen,
-        onChange: _this.handleChange }));
+        onChange: _this.handleChange
+      }));
     };
 
     _this.state = {
