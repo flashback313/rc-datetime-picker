@@ -4,7 +4,7 @@ import {argv} from 'yargs';
 
 const env = argv.env;
 const config = {
-  devtool: 'eval',
+  devtool: 'source-map',
   entry: {
     app: ['./docs/app.jsx']
   },

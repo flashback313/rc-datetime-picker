@@ -37,37 +37,31 @@ class Time extends Component {
     return result;
   };
 
-  handleChange = (type, value) => {
-    const { onChange, range, rangeAt } = this.props;
-    const _moment = this.state.moment.clone();
-    let selected = this.props.moment;
-
-    _moment[type](value);
-
-    if (range) {
-      const copyed = selected ? Object.assign(selected, {}) : {};
-
-      copyed[rangeAt] = _moment;
-    } else {
-      selected = _moment;
-    }
-
-    this.setState({
-      moment: _moment
-    });
-    onChange && onChange(selected);
+  handleChange = value => {
+    const { onChange, rangeAt, moment } = this.props;
+    onChange &&
+      onChange(
+        Object.assign({}, moment, {
+          [rangeAt]: value
+        })
+      );
   };
 
   render() {
-    // const _moment = this.state.moment;
-    const { style } = this.props;
-
+    const { style, moment, rangeAt } = this.props;
+    const val = moment[rangeAt];
     return (
       <div style={style}>
         <div className="time">
           <div className="rc-calendar-time-picker">
             <div className="rc-calendar-time-picker-panel">
-              <TimePickerPanel value={moment()} format={'HH:mm'} showHour showMinute  />
+              <TimePickerPanel
+                value={val}
+                format={'HH:mm'}
+                showHour
+                showMinute
+                onChange={this.handleChange}
+              />
             </div>
           </div>
         </div>
