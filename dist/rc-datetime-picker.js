@@ -1258,7 +1258,8 @@ var Range = function (_Component) {
                   React__default.createElement(Picker, _extends({}, props, {
                     isOpen: isOpen,
                     className: 'range-start-picker',
-                    splitPanel: showTimePicker,
+                    showTimePicker: showTimePicker,
+                    splitPanel: splitPanel,
                     moment: moment$$1,
                     range: true,
                     rangeAt: 'start',
@@ -1271,7 +1272,8 @@ var Range = function (_Component) {
                   React__default.createElement(Picker, _extends({}, props, {
                     isOpen: isOpen,
                     className: 'range-end-picker',
-                    splitPanel: showTimePicker,
+                    showTimePicker: showTimePicker,
+                    splitPanel: splitPanel,
                     moment: moment$$1,
                     range: true,
                     rangeAt: 'end',
