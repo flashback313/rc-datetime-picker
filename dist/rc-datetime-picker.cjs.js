@@ -1891,12 +1891,13 @@ var RangeTrigger = function (_Component) {
           pos = _this$state.pos,
           isOpen = _this$state.isOpen;
 
-      var style = defineProperty({
+      var style = {
         display: isOpen ? 'block' : 'none',
         position: 'fixed',
         top: pos.top + 'px',
-        left: pos.left + 'px'
-      }, 'z-index', 1);
+        left: pos.left + 'px',
+        zIndex: 1
+      };
 
       return React__default.createElement(
         Portal,

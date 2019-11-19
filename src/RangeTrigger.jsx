@@ -83,7 +83,7 @@ class RangeTrigger extends Component {
       position: 'fixed',
       top: `${pos.top}px`,
       left: `${pos.left}px`,
-      ['z-index']: 1
+      zIndex: 1
     };
 
     return <Portal style={style}>{this._renderPicker(true)}</Portal>;
