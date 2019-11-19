@@ -1182,7 +1182,9 @@ var Range = function (_Component) {
           _props$startDateText = _props.startDateText,
           startDateText = _props$startDateText === undefined ? START_DATE_TEXT : _props$startDateText,
           _props$endDateText = _props.endDateText,
-          endDateText = _props$endDateText === undefined ? END_DATE_TEXT : _props$endDateText;
+          endDateText = _props$endDateText === undefined ? END_DATE_TEXT : _props$endDateText,
+          _props$splitPanel = _props.splitPanel,
+          splitPanel = _props$splitPanel === undefined ? false : _props$splitPanel;
 
       var formatStyle = format || (showTimePicker ? 'YYYY/MM/DD HH:mm' : 'YYYY/MM/DD');
       var className = classNames('datetime-range-picker', this.props.className);
