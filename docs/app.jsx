@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { render } from 'react-dom';
 import moment from 'moment';
 
-import { DatetimePickerTrigger } from '../src/index';
-import { DatetimePicker, DatetimeRangePicker } from '../src/index';
+import { DatetimePickerTrigger } from '../dist/rc-datetime-picker';
+import { DatetimePicker, DatetimeRangePicker } from '../dist/rc-datetime-picker';
 import './app.less';
 
 class InlinePicker extends Component {
