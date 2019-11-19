@@ -122,7 +122,8 @@ class Range extends Component {
                     {...props}
                     isOpen={isOpen}
                     className="range-start-picker"
-                    splitPanel={showTimePicker}
+                    showTimePicker={showTimePicker}
+                    splitPanel={splitPanel}
                     moment={moment}
                     range
                     rangeAt="start"
@@ -134,7 +135,8 @@ class Range extends Component {
                     {...props}
                     isOpen={isOpen}
                     className="range-end-picker"
-                    splitPanel={showTimePicker}
+                    showTimePicker={showTimePicker}
+                    splitPanel={splitPanel}
                     moment={moment}
                     range
                     rangeAt="end"
