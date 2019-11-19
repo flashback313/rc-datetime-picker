@@ -85,11 +85,11 @@ class Trigger extends Component {
       display: isOpen ? 'block' : 'none',
       position: 'fixed',
       top: `${pos.top}px`,
-      left: `${pos.left}px`
+      left: `${pos.left}px`,
+      zIndex: 1
     };
-    style['z-index'] = 1;
 
-    return <Portal style={style}>{this._renderPicker(true)}</Portal>;
+    return <Portal style={style} className="datetime-picker-container">{this._renderPicker(true)}</Portal>;
   };
 
   _renderPicker = isOpen => {

@@ -928,7 +928,13 @@ var _initialiseProps$1 = function _initialiseProps() {
         rangeAt = _props2.rangeAt,
         moment$$1 = _props2.moment;
 
-    onChange && onChange(Object.assign({}, moment$$1, defineProperty({}, rangeAt, value)));
+    if (onChange) {
+      if (rangeAt) {
+        onChange(Object.assign({}, moment$$1, defineProperty({}, rangeAt, value)));
+      } else {
+        onChange(value);
+      }
+    }
   };
 };
 
@@ -1751,13 +1757,13 @@ var Trigger = function (_Component) {
         display: isOpen ? 'block' : 'none',
         position: 'fixed',
         top: pos.top + 'px',
-        left: pos.left + 'px'
+        left: pos.left + 'px',
+        zIndex: 1
       };
-      style['z-index'] = 1;
 
       return React__default.createElement(
         Portal,
-        { style: style },
+        { style: style, className: 'datetime-picker-container' },
         _this._renderPicker(true)
       );
     };

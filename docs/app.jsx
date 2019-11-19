@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { render } from 'react-dom';
 import moment from 'moment';
 
-import { DatetimePickerTrigger } from '../dist/rc-datetime-picker';
+import { DatetimePickerTrigger } from '../src/index';
 import { DatetimePicker, DatetimeRangePicker } from '../src/index';
 import './app.less';
 
@@ -74,6 +74,7 @@ class PopupPicker extends Component {
         shortcuts={shortcuts}
         moment={datetime}
         onChange={this.handleChange}
+        appendToBody
       >
         <input type="text" value={value} readOnly />
         <span className="fa fa-calendar-o"></span>

@@ -39,12 +39,17 @@ class Time extends Component {
 
   handleChange = value => {
     const { onChange, rangeAt, moment } = this.props;
-    onChange &&
-      onChange(
-        Object.assign({}, moment, {
-          [rangeAt]: value
-        })
-      );
+    if (onChange) {
+      if (rangeAt) {
+        onChange(
+          Object.assign({}, moment, {
+            [rangeAt]: value
+          })
+        );
+      } else {
+        onChange(value);
+      }
+    }
   };
 
   render() {
