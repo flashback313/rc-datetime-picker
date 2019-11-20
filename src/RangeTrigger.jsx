@@ -67,7 +67,7 @@ class RangeTrigger extends Component {
   };
 
   getPosition = () => {
-    const { align = 'bottom', splitPanel = false } = this.props;
+    const { align = 'bottom', splitPanel = false, alignPlaceY = 300 } = this.props;
     const elem = this.refs.trigger;
     const elemBCR = elem.getBoundingClientRect();
     if (align === 'top') {
@@ -76,7 +76,7 @@ class RangeTrigger extends Component {
         timePanelHeight = 230;
       }
       return {
-        top: Math.round(elemBCR.top - 350 - timePanelHeight),
+        top: Math.round(elemBCR.top - alignPlaceY - timePanelHeight),
         left: Math.round(elemBCR.left)
       };
     }

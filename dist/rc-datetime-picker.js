@@ -1883,7 +1883,9 @@ var RangeTrigger = function (_Component) {
           _this$props$align = _this$props.align,
           align = _this$props$align === undefined ? 'bottom' : _this$props$align,
           _this$props$splitPane = _this$props.splitPanel,
-          splitPanel = _this$props$splitPane === undefined ? false : _this$props$splitPane;
+          splitPanel = _this$props$splitPane === undefined ? false : _this$props$splitPane,
+          _this$props$alignPlac = _this$props.alignPlaceY,
+          alignPlaceY = _this$props$alignPlac === undefined ? 300 : _this$props$alignPlac;
 
       var elem = _this.refs.trigger;
       var elemBCR = elem.getBoundingClientRect();
@@ -1893,7 +1895,7 @@ var RangeTrigger = function (_Component) {
           timePanelHeight = 230;
         }
         return {
-          top: Math.round(elemBCR.top - 350 - timePanelHeight),
+          top: Math.round(elemBCR.top - alignPlaceY - timePanelHeight),
           left: Math.round(elemBCR.left)
         };
       }
