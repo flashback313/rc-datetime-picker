@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { findDOMNode } from 'react-dom';
 import blacklist from 'blacklist';
-
+import classname from 'classnames';
 import DatetimeRangePicker from './Range.jsx';
 import Portal from './Portal.jsx';
 
@@ -107,11 +107,12 @@ class RangeTrigger extends Component {
       'children',
       'onChange'
     );
+    const { align = 'bottom' } = this.props;
 
     return (
       <DatetimeRangePicker
         {...props}
-        className="datetime-range-picker-popup"
+        className={classname('datetime-range-picker-popup', align)}
         isOpen={isOpen}
         onChange={this.handleChange}
       />
