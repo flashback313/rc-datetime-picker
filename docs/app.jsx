@@ -2,8 +2,10 @@ import React, { Component } from 'react';
 import { render } from 'react-dom';
 import moment from 'moment';
 
-import { DatetimePickerTrigger } from '../dist/rc-datetime-picker';
-import { DatetimePicker, DatetimeRangePicker } from '../dist/rc-datetime-picker';
+import {
+  DatetimePicker,
+  DatetimeRangePickerTrigger
+} from '../dist/rc-datetime-picker';
 import './app.less';
 
 class InlinePicker extends Component {
@@ -25,7 +27,7 @@ class InlinePicker extends Component {
   };
 
   render() {
-    const { moment, range } = this.state;
+    const { moment } = this.state;
 
     return (
       <div>
@@ -36,10 +38,6 @@ class InlinePicker extends Component {
           moment={moment}
           onChange={this.handleChange}
           splitPanel
-        />
-        <DatetimeRangePicker
-          moment={range}
-          showTimePicker
         />
       </div>
     );
@@ -61,24 +59,26 @@ class PopupPicker extends Component {
   };
 
   render() {
-    const shortcuts = {
-      Today: moment(),
-      Yesterday: moment().subtract(1, 'days'),
-      Clear: ''
-    };
-    const { datetime } = this.state;
-    const value = datetime ? datetime.format('YYYY/MM/DD HH:mm') : '';
+    // const shortcuts = {
+    //   Today: moment(),
+    //   Yesterday: moment().subtract(1, 'days'),
+    //   Clear: ''
+    // };
+    // const { datetime } = this.state;
+    // const value = datetime ? datetime.format('YYYY/MM/DD HH:mm') : '';
 
     return (
-      <DatetimePickerTrigger
-        shortcuts={shortcuts}
-        moment={datetime}
-        onChange={this.handleChange}
-        appendToBody
-      >
-        <input type="text" value={value} readOnly />
-        <span className="fa fa-calendar-o"></span>
-      </DatetimePickerTrigger>
+      <div>
+        <DatetimeRangePickerTrigger
+          moment={{ start: moment(), end: moment() }}
+          showTimePicker
+          appendToBody
+          align="top"
+          splitPanel
+        >
+          <input value="123" />
+        </DatetimeRangePickerTrigger>
+      </div>
     );
   }
 }

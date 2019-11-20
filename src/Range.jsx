@@ -45,7 +45,6 @@ class Range extends Component {
   onConfirm = () => {
     const { moment } = this.state;
     const { onChange } = this.props;
-
     onChange && onChange(moment);
   };
 

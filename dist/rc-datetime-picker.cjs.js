@@ -1149,7 +1149,6 @@ var Range = function (_Component) {
       var moment$$1 = _this.state.moment;
       var onChange = _this.props.onChange;
 
-
       onChange && onChange(moment$$1);
     };
 
@@ -1881,9 +1880,24 @@ var RangeTrigger = function (_Component) {
     };
 
     _this.getPosition = function () {
+      var _this$props = _this.props,
+          _this$props$align = _this$props.align,
+          align = _this$props$align === undefined ? 'bottom' : _this$props$align,
+          _this$props$splitPane = _this$props.splitPanel,
+          splitPanel = _this$props$splitPane === undefined ? false : _this$props$splitPane;
+
       var elem = _this.refs.trigger;
       var elemBCR = elem.getBoundingClientRect();
-
+      if (align === 'top') {
+        var timePanelHeight = 0;
+        if (!splitPanel) {
+          timePanelHeight = 230;
+        }
+        return {
+          top: Math.round(elemBCR.top - 350 - timePanelHeight),
+          left: Math.round(elemBCR.left)
+        };
+      }
       return {
         top: Math.round(elemBCR.top + elemBCR.height),
         left: Math.round(elemBCR.left)
