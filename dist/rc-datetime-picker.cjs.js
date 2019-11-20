@@ -19,6 +19,7 @@ var moment = _interopDefault(require('moment'));
 var TimePickerPanel = _interopDefault(require('rc-time-picker/lib/Panel'));
 var ReactDOM = require('react-dom');
 var ReactDOM__default = _interopDefault(ReactDOM);
+var classname = _interopDefault(require('classnames'));
 
 var WEEKS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 var MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
@@ -1926,9 +1927,12 @@ var RangeTrigger = function (_Component) {
 
     _this._renderPicker = function (isOpen) {
       var props = blacklist(_this.props, 'className', 'appendToBody', 'children', 'onChange');
+      var _this$props$align2 = _this.props.align,
+          align = _this$props$align2 === undefined ? 'bottom' : _this$props$align2;
+
 
       return React__default.createElement(Range, _extends({}, props, {
-        className: 'datetime-range-picker-popup',
+        className: classname('datetime-range-picker-popup', align),
         isOpen: isOpen,
         onChange: _this.handleChange
       }));

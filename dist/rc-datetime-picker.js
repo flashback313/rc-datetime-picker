@@ -6,10 +6,10 @@
  * License: MIT
  */
 (function (global, factory) {
-	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('react'), require('classnames/bind'), require('blacklist'), require('moment'), require('rc-time-picker/lib/Panel'), require('react-dom')) :
-	typeof define === 'function' && define.amd ? define(['exports', 'react', 'classnames/bind', 'blacklist', 'moment', 'rc-time-picker/lib/Panel', 'react-dom'], factory) :
-	(factory((global['rc-datetime-picker'] = {}),global.React,global.classNames,global.blacklist,global.moment,global.TimePickerPanel,global.ReactDOM));
-}(this, (function (exports,React,classNames,blacklist,moment,TimePickerPanel,ReactDOM) { 'use strict';
+	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('react'), require('classnames/bind'), require('blacklist'), require('moment'), require('rc-time-picker/lib/Panel'), require('react-dom'), require('classnames')) :
+	typeof define === 'function' && define.amd ? define(['exports', 'react', 'classnames/bind', 'blacklist', 'moment', 'rc-time-picker/lib/Panel', 'react-dom', 'classnames'], factory) :
+	(factory((global['rc-datetime-picker'] = {}),global.React,global.classNames,global.blacklist,global.moment,global.TimePickerPanel,global.ReactDOM,global.classname));
+}(this, (function (exports,React,classNames,blacklist,moment,TimePickerPanel,ReactDOM,classname) { 'use strict';
 
 var React__default = 'default' in React ? React['default'] : React;
 classNames = classNames && classNames.hasOwnProperty('default') ? classNames['default'] : classNames;
@@ -17,6 +17,7 @@ blacklist = blacklist && blacklist.hasOwnProperty('default') ? blacklist['defaul
 moment = moment && moment.hasOwnProperty('default') ? moment['default'] : moment;
 TimePickerPanel = TimePickerPanel && TimePickerPanel.hasOwnProperty('default') ? TimePickerPanel['default'] : TimePickerPanel;
 var ReactDOM__default = 'default' in ReactDOM ? ReactDOM['default'] : ReactDOM;
+classname = classname && classname.hasOwnProperty('default') ? classname['default'] : classname;
 
 var WEEKS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 var MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
@@ -1924,9 +1925,12 @@ var RangeTrigger = function (_Component) {
 
     _this._renderPicker = function (isOpen) {
       var props = blacklist(_this.props, 'className', 'appendToBody', 'children', 'onChange');
+      var _this$props$align2 = _this.props.align,
+          align = _this$props$align2 === undefined ? 'bottom' : _this$props$align2;
+
 
       return React__default.createElement(Range, _extends({}, props, {
-        className: 'datetime-range-picker-popup',
+        className: classname('datetime-range-picker-popup', align),
         isOpen: isOpen,
         onChange: _this.handleChange
       }));
